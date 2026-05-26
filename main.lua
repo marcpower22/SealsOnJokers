@@ -7677,7 +7677,7 @@ end
 
 local oldsmodscalceff = SMODS.calculate_effect
 SMODS.calculate_effect = function(effect, scored_card, ...)
-    if G.soe_truer_card and G.soe_truer_card[scored_card] then
+    if scored_card and G.soe_truer_card and G.soe_truer_card[scored_card] then
         return oldsmodscalceff(effect, G.soe_truer_card[scored_card], ...)
     elseif scored_card and scored_card.soe_realcard then
         return oldsmodscalceff(effect, scored_card.soe_realcard, ...)
@@ -7746,7 +7746,7 @@ function Card:highlight(is_higlighted)
             G.hand.config.soe_old_highlighted_limit = nil
             local limit, count = G.hand.config.highlighted_limit, #G.hand.highlighted
             if limit < count then
-                for i=limit+1, count do
+                for i=count, limit+1, -1 do
                     G.hand:remove_from_highlighted(G.hand.highlighted[i])
                 end
             end
